@@ -1,0 +1,16 @@
+{
+  "name": "cs2300",
+  "description": "Repository for CS2300 - Discrete Mathematics",
+  "version": "0.0.1",
+
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/ninja-coders/cs2300"
+  },
+  
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "assemble": "~0.4.37",
+    "grunt-newer": "~0.7.0"
+  }
+}
