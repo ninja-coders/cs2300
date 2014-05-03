@@ -81,11 +81,33 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('setupRepo', 'Create the gh-pages directory for current project', function() {
+    var original =  process.cwd();
+    process.chdir(siteDir);
+    try {
+      shell.exec('git reset HEAD --hard');
+      shell.exec('git pull origin gh-pages');
+      shell.exec('rm -rf *');
+    } catch (err) {
+      grunt.log.write('Errors while trying to push to gh-pages');
+    }
+    process.chdir(original);
+
     grunt.log.write('TODO: mkw').ok();
   });
 
   grunt.registerTask('pushChanges', 'Push site changes to github', function() {
-    grunt.log.write('Pushing to gh-pages').ok();
+    var original =  process.cwd();
+    process.chdir(siteDir);
+    try {
+      shell.exec('git add . -A');
+      shell.exec('git commit -am "Pages Published"');
+      shell.exec('git push origin gh-pages');
+    } catch (err) {
+      grunt.log.write('Errors while trying to push to gh-pages').fail();
+    }
+    process.chdir(original);
+
+    grunt.log.write('gh-pages push successful').ok();
   });
 
   grunt.registerTask('startServer', 'Start a static server', function() {
