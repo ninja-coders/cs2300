@@ -37,16 +37,39 @@ module.exports = function(grunt) {
           expand: true, 
           src: ['lib/**'],
           dest: buildDir
+        }, {
+          expand: true,
+          src: ['plugin/**'],
+          dest: buildDir
+        }, {
+          expand: true, 
+          cwd: 'src/',
+          src: ['img/**'], 
+          dest: buildDir
+        }, {
+          expand: true,
+          cwd: 'src/',
+          src: ['js/**'], 
+          dest: buildDir
+        }, {
+          expand: true,
+          cwd: 'src/',
+          src: ['css/**'], 
+          dest: buildDir
         }]
       },
       publish: {
+        files: [{
+          expand: true, 
+          cwd: buildDir, 
+          src: ['**'], 
+          dest: siteDir
+        }]
       }
     },
     clean: [buildDir + '/**/*']
   });
 
-  grunt.loadNpmTasks('assemble');
-  grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -77,7 +100,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['clean', 'jade:compile', 'copy:build']);
   grunt.registerTask('preview', ['build', 'startServer']);
-  grunt.registerTask('publish', ['build', 'setupRepo', 'newer:assemble', 'pushChanges']);
+  grunt.registerTask('publish', ['build', 'setupRepo', 'copy:publish', 'pushChanges']);
   grunt.registerTask('default', ['build']);
 };
 
