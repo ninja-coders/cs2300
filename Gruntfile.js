@@ -21,35 +21,52 @@ module.exports = function(grunt) {
         }]
       }
     },
-    assemble: {
-      options: {
-        assets: 'dist'
-      },
-      index: {
-        files: { 'site/index.html': [buildDir + '/index.html']},
-        options: { 
-          assets: 'dist',
-          layout: 'none'
+    less: {
+      build: {
+        options: {
+          paths: [buildDir + '/css']
+        },
+        files: {
+          'build/css/site.css': 'src/less/site.less'
         }
       }
-    }, 
-    clean: [buildDir + '/*', siteDir + '/**/*.html']
+    },
+    copy: {
+      build: {
+        files: [{
+          expand: true, 
+          src: ['lib/**'],
+          dest: buildDir
+        }]
+      },
+      publish: {
+      }
+    },
+    clean: [buildDir + '/**/*']
   });
 
   grunt.loadNpmTasks('assemble');
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-jade');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.registerTask('build', ['clean', 'jade:compile', 'newer:assemble']);
-  grunt.registerTask('default', ['build']);
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('sayHello', 'Say Hi!', function() {
     grunt.log.write('Hello!!!').ok();
   });
 
+  grunt.registerTask('setupRepo', 'Create the gh-pages directory for current project', function() {
+    grunt.log.write('TODO: mkw').ok();
+  });
+
+  grunt.registerTask('pushChanges', 'Push site changes to github', function() {
+    grunt.log.write('Pushing to gh-pages').ok();
+  });
+
   grunt.registerTask('startServer', 'Start a static server', function() {
     var original =  process.cwd();
-    process.chdir(siteDir);
+    process.chdir(buildDir);
     try {
       shell.exec('static-server');
     } catch (err) {
@@ -58,6 +75,9 @@ module.exports = function(grunt) {
     process.chdir(original);
   });
 
-  grunt.registerTask('preview', ['newer:assemble', 'startServer']);
+  grunt.registerTask('build', ['clean', 'jade:compile', 'copy:build']);
+  grunt.registerTask('preview', ['build', 'startServer']);
+  grunt.registerTask('publish', ['build', 'setupRepo', 'newer:assemble', 'pushChanges']);
+  grunt.registerTask('default', ['build']);
 };
 
