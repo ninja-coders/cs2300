@@ -3,17 +3,26 @@ head(lang='en')
   include layouts/slide-header.jade
 
   body
-    #reveal
-      #slides
+    .reveal
+      .slides
         section(id="title")
           h1 Discrete Mathematics
           h2 CS 2300
           br
           h3 Introduction to Mathematics (The Computer Way)
           p
-            small Professor
+            small Professor 
               a(href='http://mikewright.me') Michael Wright
               |  / 
               a(href='http://twitter.com/mk_wright') mk_wright
+       
+        include layouts/syllabus/about-me.jade
+        include layouts/syllabus/table-of-contents.jade
+        include layouts/syllabus/course-details.jade
+        include layouts/syllabus/communication.jade
+        include layouts/syllabus/schedule.jade
 
     include layouts/slide-footer.jade 
+
+
+

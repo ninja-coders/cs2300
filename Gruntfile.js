@@ -28,7 +28,8 @@ module.exports = function(grunt) {
           paths: [buildDir + '/css']
         },
         files: {
-          'build/css/site.css': 'src/less/site.less'
+          'build/css/site.css': 'src/less/site.less',
+          'build/css/custom.css': 'src/less/custom.less'
         }
       }
     },
@@ -68,6 +69,16 @@ module.exports = function(grunt) {
         }]
       }
     },
+    watch: {
+      scripts: {
+        files: ['src/**/*', 'Gruntfile.js'],
+        tasks: ['preview'],
+        options: {
+          spawn: true,
+          interrupt: true
+        }
+      } 
+    },
     clean: [buildDir + '/**/*']
   });
 
@@ -75,6 +86,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('sayHello', 'Say Hi!', function() {
     grunt.log.write('Hello!!!').ok();
@@ -121,7 +133,7 @@ module.exports = function(grunt) {
     process.chdir(original);
   });
 
-  grunt.registerTask('build', ['clean', 'jade:compile', 'copy:build']);
+  grunt.registerTask('build', ['clean', 'jade:compile', 'less', 'copy:build']);
   grunt.registerTask('preview', ['build', 'startServer']);
   grunt.registerTask('publish', ['build', 'setupRepo', 'copy:publish', 'pushChanges']);
   grunt.registerTask('default', ['build']);
