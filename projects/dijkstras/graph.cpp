@@ -19,7 +19,6 @@ vector<Edge> Graph::TracePath(string& start, string& end) {
   map<string, vector<Edge> > vertices = _vertices;
   map<string, PathCost> calculations;
 
-  // Setup Starting Point
   calculations[start].cost = 0;
   string currentVertice;
   do {
