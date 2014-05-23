@@ -20,3 +20,4 @@ count([_|T]) -> 1 + count(T).
 %% Demonstrate using functional composition
 average(T,C) -> T / C.
 
+
