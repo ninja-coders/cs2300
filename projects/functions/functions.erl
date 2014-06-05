@@ -1,5 +1,5 @@
 -module(functions).
--export([make_even/1, sum/1, word_length/1, count/1, average/2]).
+-export([make_even/1, sum/1, word_length/1, count/1, average/2, even/1]).
 
 %% This is a map function
 make_even([]) -> [];
@@ -16,6 +16,9 @@ sum([H|T]) -> H + sum(T).
 %% This is a Reduce
 count([]) -> 0;
 count([_|T]) -> 1 + count(T).
+
+%% Simple Equivalence Function
+even(X) -> (X rem 2) == 0.
 
 %% Demonstrate using functional composition
 average(T,C) -> T / C.
